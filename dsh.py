@@ -54,8 +54,8 @@ def menu(PS1):
     
 def main():
     signal.signal(signal.SIGINT, signal_handler)
-    PS1 = confparse.getPS1()
     while(True):
+        PS1 = confparse.getPS1()
         menu(PS1)
 
 if __name__ == "__main__":
