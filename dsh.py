@@ -1,12 +1,13 @@
 import subprocess
 import signal 
 import os
+import confparse
 
 def signal_handler(signal, frame):
     pass
 
-def menu():
-    stdinShell = input("dsh> ")
+def menu(PS1):
+    stdinShell = input(PS1)
     if stdinShell == "exit":
         exit()
     
@@ -53,8 +54,9 @@ def menu():
     
 def main():
     signal.signal(signal.SIGINT, signal_handler)
+    PS1 = confparse.getPS1()
     while(True):
-        menu()
+        menu(PS1)
 
 if __name__ == "__main__":
     main()
