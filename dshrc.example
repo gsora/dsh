@@ -1,0 +1,19 @@
+#
+# This is the config file for dsh, the dumb shell.
+# All you can config here (by now, I hope) is the shell prompt.
+# This file must be put in your home as ".dshrc"
+#
+# Parameter conversion rule: all that is not preceded by a "@", is not considered at the conversion time.
+# 
+# 	@time: local time (will automatically select the appropriate visualization based on the timezone)
+# 	@date: local date (will automatically select the appropriate visualization based on the timezone)
+# 	@host: hostname
+# 	@pwd: current directory
+# 	@user: current user name
+#
+# Your prompt must start like this:
+# 
+# 	PS1=blablabla
+#
+
+PS1=@time-@date-@user@@host @pwd > 
