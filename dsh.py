@@ -58,6 +58,7 @@ def menu(PS1, histFile):
         histFilePath = os.path.expanduser("~/.dsh_history")
         
     stdinShell = input(PS1)
+    stdinShell = stdinShell.replace("~", os.path.expanduser("~"))
     if stdinShell == "exit":
         readline.write_history_file(histFilePath)
         exit()
