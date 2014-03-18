@@ -15,5 +15,7 @@
 # 
 # 	PS1=blablabla
 #
+# The history file can be set with the "HIST=" hotword, otherwise will be saved to ~/.dsh_history
 
 PS1=@time-@date-@user@@host @pwd > 
+HIST=~/.myHistoryFile
