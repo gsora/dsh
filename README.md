@@ -17,3 +17,8 @@ Clone this repo, then
 	python3 ./dsh.py
 	
 and have fun!
+
+#### Configuration file
+
+The default configuration file must be placed into your home, named as `.dshrc`.
+See `dshrc.example` to understand how to configure it.
