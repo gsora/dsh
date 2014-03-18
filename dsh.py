@@ -18,9 +18,11 @@ def menu(PS1):
     if stdinShell == "help":
         print("Dumb Shell: the dumbest shell you'll find on the net. Period.")
         return True
+    
     commandList = stdinShell.split(' ')
     
     argsString = ""
+    
     firstIteration = True
     for i in commandList:
         if len(commandList) == 1:
