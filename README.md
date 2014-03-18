@@ -4,10 +4,9 @@
 This is the result of some hours spent alone with Python3, and a book about Operating Systems structure.
 It's a shell, or at least *sort of*.
 
-Using Python3 with `subprocess`, `signal` and `os` here's a working implementation of a system shell.
-No scripting, no TAB completion, nothing.
+Using Python3 with `subprocess`, `signal`, `os` and `readline` here's a working implementation of a system shell.
 
-After all, it's only a **proof of concept**.
+It's very simple: after all, it's only a **proof of concept**.
 
 #### How to use it
 
