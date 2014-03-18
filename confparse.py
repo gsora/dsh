@@ -12,9 +12,9 @@ def getPS1():
     curDir = getcwd()
     username = getuser()
 
-    configFile = open(configFilePath, 'r')
+    configFile = open(configFilePath, 'r+')
     for line in configFile:
         if line[:1] is "#":
             pass
         elif line[:4] == "PS1=":
-            return(line.replace("@time", currentTime).replace("@date", currentDate).replace("@host", hostname).replace("@pwd", curDir).replace("@user", username)[4:])
+            return(line.replace("@time", currentTime).replace("@date", currentDate).replace("@host", hostname).replace("@pwd", curDir).replace("@user", username).rstrip('\n')[4:])
