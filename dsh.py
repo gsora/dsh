@@ -2,9 +2,10 @@ import subprocess
 import signal 
 import os
 import confparse
+import readline
 
 def signal_handler(signal, frame):
-    pass
+    return True
 
 def menu(PS1):
     stdinShell = input(PS1)
@@ -56,6 +57,8 @@ def menu(PS1):
     
 def main():
     signal.signal(signal.SIGINT, signal_handler)
+    readline.parse_and_bind('tab: complete')
+    readline.parse_and_bind('set editing-mode vi')
     while(True):
         PS1 = confparse.getPS1()
         menu(PS1)
