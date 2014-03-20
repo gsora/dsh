@@ -24,43 +24,49 @@ class HistoryCompleter(object):
         response = None
         if state == 0:
             history_values = get_history_items()
-            logging.debug('history: %s', history_values)
             if text:
                 self.matches = sorted(h 
                                       for h in history_values 
                                       if h and h.startswith(text))
             else:
                 self.matches = []
-            logging.debug('matches: %s', self.matches)
         try:
             response = self.matches[state]
         except IndexError:
             response = None
-        logging.debug('complete(%s, %s) => %s', 
-                      repr(text), state, repr(response))
         return response
 
-def menu(PS1, histFile):
-    histFilePath = ""
-    histFile = histFile.replace("~", os.path.expanduser("~"))
-    
-    try:
+def histFilePath():
+    histFile = confparse.getHistFile()
+    # if history file is specified
+    if histFile is not None:
+        histFile = histFile.replace("~", os.path.expanduser("~")).replace("./", os.getcwd() + "/").replace("\n", "")
+        print(os.path.exists(histFile))
         if not os.path.exists(histFile):
             os.system("touch {}".format(histFile))
             readline.read_history_file(histFile)
-            histFilePath = histFile
+            return histFile
         else:
             readline.read_history_file(histFile)
-            histFilePath = histFile
-    except FileNotFoundError:
-        os.system("touch ~/.dsh_history")
-        readline.read_history_file(os.path.expanduser("~/.dsh_history"))
-        histFilePath = os.path.expanduser("~/.dsh_history")
-        
+            return histFile
+    else:
+        # file not specified
+        if not os.path.exists(os.path.expanduser("~./dsh_history")):
+            os.system("touch ~/.dsh_history")
+            readline.read_history_file(os.path.expanduser("~/.dsh_history"))
+            histFile = os.path.expanduser("~/.dsh_history")
+            return histFile
+        else:
+            readline.read_history_file(os.path.expanduser("~/.dsh_history"))
+            histFile = os.path.expanduser("~/.dsh_history")
+            return histFile
+    
+
+def menu(PS1, histFile):
     stdinShell = input(PS1)
     stdinShell = stdinShell.replace("~", os.path.expanduser("~"))
     if stdinShell == "exit":
-        readline.write_history_file(histFilePath)
+        readline.write_history_file(histFile)
         exit()
     
     if stdinShell == "clear":
@@ -105,16 +111,16 @@ def menu(PS1, histFile):
             spawnedProc.kill()
         except FileNotFoundError:
             print("Error --> {}: no such file or directory".format(commandList[0]))
-    readline.write_history_file(histFilePath)
+    readline.write_history_file(histFile)
     
 def main():
     signal.signal(signal.SIGINT, signal_handler)
     readline.parse_and_bind('tab: complete')
     readline.parse_and_bind('set editing-mode vi')
     readline.set_completer(HistoryCompleter().complete)
+    histFile = histFilePath()
     while(True):
         PS1 = confparse.getPS1()
-        histFile = confparse.getHistFile()
         menu(PS1, histFile)
 
 if __name__ == "__main__":
